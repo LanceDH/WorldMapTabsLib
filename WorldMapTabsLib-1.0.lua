@@ -218,4 +218,7 @@ function lib:LinkTabToContentFrame(tab, contentFrame)
 	if (not alreadyInArray) then
 		tinsert(QuestMapFrame.ContentFrames, contentFrame);
 	end
+
+	-- Hide the frame because we're probably starting on the official quest log
+	contentFrame:Hide();
 end
