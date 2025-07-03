@@ -27,6 +27,11 @@ function WMTL_DefaultTabMixin:SetChecked(checked)
 
 	local alpha = 1;
 	if (self.activeAtlas) then
+		-- Ensure inactiveAtlas isn't empty
+		if (not self.inactiveAtlas) then
+			self.inactiveAtlas = self.activeAtlas;
+		end
+
 		QuestLogTabButtonMixin.SetChecked(self, checked);
 
 		if(not checked) then
@@ -38,11 +43,16 @@ function WMTL_DefaultTabMixin:SetChecked(checked)
 		end
 
 	elseif (self.activeTexture) then
+		-- Ensure inactiveTexture isn't empty
+		if (not self.inactiveTexture) then
+			self.inactiveTexture = self.activeTexture;
+		end
+
 		if (checked) then
 			self.Icon:SetTexture(self.activeTexture);
 		else
 			self.Icon:SetTexture(self.inactiveTexture or self.activeTexture);
-			alpha = (not self.inactiveTexture or self.activeTexture == self.inactiveTexture) and 0.55 or 1;
+			alpha = self.activeTexture == self.inactiveTexture and 0.55 or 1;
 		end
 		self.Icon:SetSize(28, 28);
 		self.SelectedTexture:SetShown(checked);
